@@ -196,7 +196,15 @@ class _ProductsViewState extends State<ProductsView> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8)),
                     ),
-                    
+                    items: [
+                      "Pizza",
+                      "MO: MO:",
+                      "Burger",
+                      "Pure Veg",
+                      "Desert",
+                      "Salad",
+                      "sandwich"
+                    ]
                         .map((type) =>
                             DropdownMenuItem(value: type, child: Text(type)))
                         .toList(),
