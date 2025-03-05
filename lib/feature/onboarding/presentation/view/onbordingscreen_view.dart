@@ -14,26 +14,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   bool _isDarkTheme = false;
 
-  // final List<Map<String, String>> onboardingData = [
-  //   {
-  //     'title': 'Explore Delicious Meals',
-  //     'description':
-  //         'Discover a variety of cuisines and order your favorites with ease.',
-  //     'image': 'assets/images/Explore Meals.jpg',
-  //   },
-  //   {
-  //     'title': 'Fast & Reliable Delivery',
-  //     'description':
-  //         'Enjoy hot and fresh meals delivered to your doorstep in no time.',
-  //     'image': 'assets/images/delivery.jpg',
-  //   },
-  //   {
-  //     'title': 'Track Your Order',
-  //     'description':
-  //         'Stay updated with real-time tracking from the kitchen to your home.',
-  //     'image': 'assets/images/Track Order.jpg',
-  //   },
-  // ];
+  final List<Map<String, String>> onboardingData = [
+    {
+      'title': 'Explore Delicious Meals',
+      'description':
+          'Discover a variety of cuisines and order your favorites with ease.',
+      'image': 'assets/images/Explore Meals.jpg',
+    },
+    {
+      'title': 'Fast & Reliable Delivery',
+      'description':
+          'Enjoy hot and fresh meals delivered to your doorstep in no time.',
+      'image': 'assets/images/delivery.jpg',
+    },
+    {
+      'title': 'Track Your Order',
+      'description':
+          'Stay updated with real-time tracking from the kitchen to your home.',
+      'image': 'assets/images/Track Order.jpg',
+    },
+  ];
 
   void _onPageChanged(int index) {
     setState(() {
@@ -124,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               context.read<OnboardingCubit>().goToLogin(context);
             },
             child: Text(
-              'Skip',
+              'Ski',
               style: TextStyle(
                 fontSize: 16,
                 color: _isDarkTheme ? Colors.white : Colors.black,
