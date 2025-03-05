@@ -124,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               context.read<OnboardingCubit>().goToLogin(context);
             },
             child: Text(
-              'Ski',
+              'Skip',
               style: TextStyle(
                 fontSize: 16,
                 color: _isDarkTheme ? Colors.white : Colors.black,
