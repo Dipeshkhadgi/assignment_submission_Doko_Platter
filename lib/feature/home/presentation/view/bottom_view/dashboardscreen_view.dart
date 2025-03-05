@@ -12,7 +12,140 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
+class _DashboardPageState extends State<DashboardPage> {
+  File? _img;
+  List<Map<String, dynamic>> recipes = [
+    {
+      'title': 'MO:MO:',
+      'description': 'Rs.180',
+      'imageUrl': 'assets/images/momo.jpg',
+      'isFavourite': true,
+    },
+    {
+      'title': 'Pizza',
+      'description': 'Rs.400',
+      'imageUrl': 'assets/images/pizza.jpg',
+      'isFavourite': true,
+    },
+    {
+      'title': 'Salad',
+      'description': 'Rs.250',
+      'imageUrl': 'assets/images/salad.jpg',
+      'isFavourite': false,
+    },
+    {
+      'title': 'Thali set',
+      'description': 'Rs.545',
+      'imageUrl': 'assets/images/thali set.jpg',
+      'isFavourite': false,
+    },
+  ];
 
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileBloc>().loadClient();
+  }
+
+  Future _browseImage(ImageSource imagesource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imagesource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void _toggleFavourite(int index) {
+    setState(() {
+      recipes[index]['isFavourite'] = !recipes[index]['isFavourite'];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding = screenWidth > 600 ? 40 : 16;
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(padding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Section with User Info Card
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+              if (state.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state.user == null) {
+                return const Center(
+                    child: Text("Top Sales",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)));
+              } else {
+                final user = state.user!;
+                final String? imageUrl = user.image;
+                final String baseUrl = Platform.isIOS
+                    ? "http://127.0.0.1:3000"
+                    : "http://10.0.2.2:3000";
+                final String fullImageUrl =
+                    imageUrl != null && imageUrl.isNotEmpty
+                        ? "$baseUrl/uploads/$imageUrl"
+                        : '';
+
+                return UserInfoCard(
+                  username: user.username,
+                  email: user.email,
+                  imageUrl: _img != null
+                      ? _img!.path
+                      : fullImageUrl.isNotEmpty
+                          ? fullImageUrl
+                          : '',
+                );
+              }
+            }),
+
+            const SizedBox(height: 20),
+
+            // ListView for single recipe cards
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: recipes.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final recipe = recipes[index];
+
+                return RecipeCard(
+                  imageUrl: recipe['imageUrl']!,
+                  title: recipe['title']!,
+                  description: recipe['description']!,
+                  isFavourite: recipe['isFavourite'],
+                  onSeeMore: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipeDetailsPage(
+                          recipeTitle: recipe['title']!,
+                          recipeDescription: recipe['description']!,
+                          recipeImageUrl: recipe['imageUrl']!,
+                        ),
+                      ),
+                    );
+                  },
+                  onFavouriteToggle: () => _toggleFavourite(index),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class UserInfoCard extends StatelessWidget {
   final String username;
