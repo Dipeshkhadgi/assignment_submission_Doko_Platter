@@ -28,16 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
               size: 100,
               color: Colors.orange,
             ),
-            SizedBox(height: 20),
-            Text(
-              'Welcome to Doko Platter',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Your fooding partner',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
+            // SizedBox(height: 20),
+            // Text(
+            //   'Welcome to Doko Platter',
+            //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // ),
+            // SizedBox(height: 10),
+            // Text(
+            //   'Your fooding partner',
+            //   style: TextStyle(fontSize: 16, color: Colors.grey),
+            // ),
           ],
         ),
       ),
